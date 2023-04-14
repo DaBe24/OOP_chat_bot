@@ -4,11 +4,11 @@ public class Dead extends Command{
 
     @Override
     public String execute(String text) {
-        return "Goodbye. Gleb is out!";
+        return "Hahaha, hero never die!!!";
     }
 
     @Override
     public String getState() {
-        return "Dead";
+        return "Wait";
     }
 }

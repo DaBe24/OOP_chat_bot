@@ -3,6 +3,8 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
+import java.io.IOException;
+
 public class TelegramProvider extends TelegramLongPollingBot {
     private static final String BotName = "Many_tries_after";
     private static final String Token = "6209908973:AAEf0_mTWrGA1p4Ajy31fenwpcjEt-rwwL4";
@@ -20,12 +22,17 @@ public class TelegramProvider extends TelegramLongPollingBot {
             String message_text = update.getMessage().getText();
             long chat_id = update.getMessage().getChatId();
 
-            String answer = getAnswer(message_text);
+            String answer = null;
+            try {
+                answer = getAnswer(message_text, chat_id);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             SendMessage message = new SendMessage().setChatId(chat_id).setText(answer);
             try {
-                System.out.println(message); // Заменить на логирование
-                execute(message); // Sending our message object to user
+                System.out.println(message);
+                execute(message);
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
@@ -42,7 +49,7 @@ public class TelegramProvider extends TelegramLongPollingBot {
         return Token;
     }
 
-    public String getAnswer(String question) {
-        return bot.takeAnswer(question);
+    public String getAnswer(String question, long chat_id) throws IOException {
+        return bot.takeAnswer(question, chat_id);
     }
 }
