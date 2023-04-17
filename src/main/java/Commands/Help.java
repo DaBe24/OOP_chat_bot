@@ -7,7 +7,7 @@ public class Help extends Command{
         return "Oh hello there! I am Gleb, your text-chat bot.\n" +
                 "My command list is:\n" +
                 "/help - command list;\n" +
-                "/???? - secret comand to end current session;\n" +
+                "/???? - secret command to end current session;\n" +
                 "/play - list games;\n";
     }
 }

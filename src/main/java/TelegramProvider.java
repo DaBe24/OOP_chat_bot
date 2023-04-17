@@ -4,6 +4,7 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import java.io.IOException;
+import java.util.List;
 
 public class TelegramProvider extends TelegramLongPollingBot {
     private static final String BotName = "Many_tries_after";
@@ -36,6 +37,26 @@ public class TelegramProvider extends TelegramLongPollingBot {
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
+
+            List<Long> ids = bot.getChatIds();
+            if (ids != null){
+                for (long id : ids){
+                    String ans = null;
+                    try {
+                        ans = getUpdate(chat_id, id);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    SendMessage mes = new SendMessage().setChatId(id).setText(ans);
+                    try {
+                        System.out.println(mes);
+                        execute(mes);
+                    } catch (TelegramApiException e) {
+                        e.printStackTrace();
+                    }
+                }
+                bot.noUpadete();
+            }
         }
     }
 
@@ -51,5 +72,9 @@ public class TelegramProvider extends TelegramLongPollingBot {
 
     public String getAnswer(String question, long chat_id) throws IOException {
         return bot.takeAnswer(question, chat_id);
+    }
+
+    public String getUpdate(long chat_id, long update_id) throws IOException {
+        return bot.takeUpdate(chat_id, update_id);
     }
 }

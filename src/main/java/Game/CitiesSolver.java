@@ -23,6 +23,14 @@ public class CitiesSolver
         index = createIndex(cities);
     }
 
+    public String getUsedCitys(){
+        StringJoiner joiner = new StringJoiner(", ");
+        for (String city : usedCities){
+            joiner.add(city);
+        }
+        return joiner.toString();
+    }
+
 
     /**
      * Проверка слова что это город
@@ -32,8 +40,18 @@ public class CitiesSolver
      */
     public Boolean isCity(String city)
     {
-        Set<String> citiesAtThisLater = index.get(getFirstChar(city));
-        return citiesAtThisLater.contains(city.toUpperCase());
+        Set<String> citiesAtThisLater = index.get(getFirstChar(city.toUpperCase()));
+        return citiesAtThisLater != null && citiesAtThisLater.contains(city.toUpperCase());
+    }
+
+
+    /**
+     * Вернуть последнеий введёный город
+     *
+     * @return последний введёный город
+     */
+    public String getLast(){
+        return last;
     }
 
 
@@ -45,23 +63,34 @@ public class CitiesSolver
      */
     public Boolean isUsedCity(String city)
     {
-        if (!usedCities.contains(city)){
-            usedCities.add(city);
-            last = city;
+        if (!usedCities.contains(city.toUpperCase())){
+            usedCities.add(city.toUpperCase());
+            last = city.toUpperCase();
             return false;
         }
         return true;
     }
 
 
+    /**
+     * Проверка первой и последней буквы
+     *
+     * @param city - город для выбора первой буквы
+     * @return первая и последняя буква совподает
+     */
     public boolean checkRuls(String city){
         return getLastChar(last).equals(getFirstChar(city));
     }
 
 
+    /**
+     * Получить следующий город
+     *
+     * @param city - город для выбора первой буквы
+     * @return Следующий город
+     */
     public String getNextCity(String city)
     {
-        Set<String> citiesAtThisLater = index.get(getLastChar(city));
         for (String nextCity : index.get(getLastChar(city))){
             if (!isUsedCity(nextCity)) {
                 usedCities.add(nextCity);
@@ -95,8 +124,8 @@ public class CitiesSolver
     {
         int pos = city.length() - 1;
         char lastChar = city.toUpperCase().charAt(pos);
-        if (city.toUpperCase().charAt(pos) == 'Й') {
-            return 'И';
+        if (city.toUpperCase().charAt(pos) == 'Ё') {
+            return 'Е';
         }
         else if (lastChar == 'Ь' || lastChar == 'Ы' || lastChar == 'Ъ') {
             pos--;
