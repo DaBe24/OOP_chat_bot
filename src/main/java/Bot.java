@@ -119,7 +119,7 @@ public class Bot {
     public String takeUpdate(long chat_id, long update_id){
         if (needUpdate){
             List<Long> chat_ids = new ArrayList<>(userToUser.keySet());
-            int next_turn =  chat_ids.indexOf(chat_id) == chat_ids.size() - 1 ? 0 : chat_ids.indexOf(chat_id);
+            int next_turn =  chat_ids.indexOf(chat_id) == chat_ids.size() - 1 ? 0 : chat_ids.indexOf(chat_id) + 1;
 
             if (update_id == next_turn){
                 userMove.put(update_id, true);
