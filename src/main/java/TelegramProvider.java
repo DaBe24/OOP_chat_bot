@@ -3,16 +3,27 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
 public class TelegramProvider extends TelegramLongPollingBot {
-    private static final String BotName = "Many_tries_after";
-    private static final String Token = "6209908973:AAEf0_mTWrGA1p4Ajy31fenwpcjEt-rwwL4";
+    private static final String Bot_Name = "Many_tries_after";
+    private static String token;
     private final Bot bot;
 
     public TelegramProvider(Bot newBot) {
         super();
+        final BufferedReader in;
+        try {
+            in = new BufferedReader(new FileReader("src/main/java/resources/token.properties"));
+            token = in.readLine();
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         bot = newBot;
     }
 
@@ -62,19 +73,19 @@ public class TelegramProvider extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return BotName;
+        return Bot_Name;
     }
 
     @Override
     public String getBotToken() {
-        return Token;
+        return token;
     }
 
-    public String getAnswer(String question, long chat_id) throws IOException {
+    private String getAnswer(String question, long chat_id) throws IOException {
         return bot.takeAnswer(question, chat_id);
     }
 
-    public String getUpdate(long chat_id, long update_id) throws IOException {
+    private String getUpdate(long chat_id, long update_id) throws IOException {
         return bot.takeUpdate(chat_id, update_id);
     }
 }
