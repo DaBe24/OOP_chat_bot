@@ -15,7 +15,7 @@ public class CitiesSolver
         final Set<String> cities = new HashSet<String>();
 
         // Загрузим города из файла
-        final BufferedReader in = new BufferedReader(new FileReader("src/main/java/resources/cities.txt"));
+        final BufferedReader in = new BufferedReader(new FileReader("src/main/resources/cities.txt"));
         for (String city; (city = in.readLine()) != null;) {
             cities.add(city.toUpperCase()); // и сложим все имена в этот массив
         }
