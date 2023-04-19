@@ -18,7 +18,7 @@ public class TelegramProvider extends TelegramLongPollingBot {
         super();
         final BufferedReader in;
         try {
-            in = new BufferedReader(new FileReader("src/main/java/resources/token.properties"));
+            in = new BufferedReader(new FileReader("src/main/resources/token.properties"));
             token = in.readLine();
             in.close();
         } catch (IOException e) {
